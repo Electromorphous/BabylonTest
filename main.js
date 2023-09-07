@@ -46,7 +46,7 @@ const renderMeshes = (scene) => {
   // generate terrain
   const terrain = new Babylon.CreateGroundFromHeightMap(
     "terrain",
-    "./assets/heightmap.png",
+    "/assets/heightmap.png",
     {
       subdivisions: 200,
       maxHeight: 0.9,
@@ -105,7 +105,7 @@ const renderMeshes = (scene) => {
   // render model
   Babylon.SceneLoader.ImportMesh(
     "",
-    "./assets/Cow/",
+    "/assets/Cow/",
     "Cow.obj",
     scene,
     (meshes) => {
