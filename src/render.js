@@ -1,48 +1,7 @@
 import * as Babylon from "@babylonjs/core";
 import "@babylonjs/loaders/OBJ";
 
-let curMesh = null;
-
-const canvas = document.getElementById("renderCanvas");
-
-const engine = new Babylon.Engine(canvas, true, { stencil: true });
-
-const createScene = () => {
-  const scene = new Babylon.Scene(engine);
-  scene.ambientColor = new Babylon.Color3(1, 1, 1);
-
-  scene.createDefaultCameraOrLight(true, false, true);
-  // scene.createDefaultCamera(true, false, true);
-
-  // render all the meshes
-  renderMeshes(scene);
-
-  // initialise ray casting function for event listener
-  scene.onPointerDown = handleHover;
-
-  return scene;
-};
-
-const handleHover = () => {
-  const mesh = getMesh();
-  if (mesh) {
-    curMesh ? (curMesh.renderOutline = false) : {};
-    mesh.renderOutline = true;
-    mesh.outlineColor = new Babylon.Color3(255, 0, 0);
-    mesh.outlineWidth = 0.02;
-    mesh.forceSharedVertices();
-    curMesh = mesh;
-  }
-};
-
-const getMesh = () => {
-  // cast ray
-  const hit = scene.pick(scene.pointerX, scene.pointerY);
-  if (hit.pickedMesh) return hit.pickedMesh;
-  return null;
-};
-
-const renderMeshes = (scene) => {
+export const renderMeshes = (scene) => {
   // generate terrain
   const terrain = new Babylon.CreateGroundFromHeightMap(
     "terrain",
@@ -117,13 +76,3 @@ const renderMeshes = (scene) => {
     }
   );
 };
-
-const scene = createScene();
-
-engine.runRenderLoop(() => {
-  scene.render();
-});
-
-window.addEventListener("resize", () => {
-  engine.resize();
-});
