@@ -25,13 +25,20 @@ canvas#renderCanvas {
   position: absolute;
   background: #fff2;
   color: white;
+  font-size: 1rem;
   font-weight: 500;
   backdrop-filter: blur(23px);
   margin: 20px;
-  padding: 13px;
+  padding: 5px 17px;
   border-radius: 10px;
 }
 
-.gui select {
-  margin-bottom: 20px;
+.gui div {
+  margin: 10px 0;
+}
+
+.gui p {
+  margin: 5px 0;
+  font-size: 0.9rem;
+  font-weight: 400;
 }

@@ -16,18 +16,19 @@
   <body>
     <canvas id="renderCanvas"></canvas>
     <div class="gui">
-      <label for="outlineType">Outline Type</label>
-      <select name="outlineType" id="outlineType">
-        <option value="1" selected>Hide front face</option>
-        <option value="2">Quantised light intensity</option>
-        <option value="3">Fresnel Shader</option>
-        <option value="4">Fresnel Shader with Edges</option>
-      </select>
-
-      <br />
-
-      <label for="colorInput">Color</label>
-      <input type="color" />
+      <div>
+        <label for="outlineType">Outline Type</label>
+        <select name="outlineType" id="outlineType">
+          <option value="1" selected>Hide front face</option>
+          <option value="2">Quantised light intensity</option>
+          <option value="3">Fresnel Shader</option>
+          <option value="4">Fresnel Shader with Edges</option>
+        </select>
+      </div>
+      <div>
+        <p>Left click: Pivot</p>
+        <p>Right click: Move</p>
+      </div>
     </div>
     <script type="module" src="/src/main.js"></script>
   </body>

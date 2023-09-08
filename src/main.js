@@ -11,7 +11,7 @@ let quantisedLightMat;
 let fresnelMat;
 let fresnelWithEdgesMat;
 
-let selectedShader = 1;
+let selectedShader = "1";
 
 const handleHover = () => {
   // get the mesh which was hovered
@@ -58,9 +58,9 @@ const createScene = async () => {
   // scene.createDefaultCamera(true, false, true);
 
   // load all materials from Node Material Editor
-  // https://nme.babylonjs.com/#8AKJ1U#2
+  // https://nme.babylonjs.com/#8AKJ1U#3
   hideFrontFaceMat = await Babylon.NodeMaterial.ParseFromSnippetAsync(
-    "8AKJ1U#2"
+    "8AKJ1U#3"
   );
   hideFrontFaceMat.depthFunction = Babylon.Constants.ALWAYS;
   hideFrontFaceMat.disableDepthWrite = true;
