@@ -8,41 +8,34 @@ let prevMaterial = null;
 // declare all materials
 let hideFrontFaceMat;
 let quantisedLightMat;
-let fresenelMat;
+let fresnelMat;
 let fresnelWithEdgesMat;
 
-// defining all outline drawing functions
-const hideFrontFaceFunc = async (mesh) => {
-  // remove shader of previous mesh
-  if (selectedMesh) selectedMesh.material = prevMaterial;
-
-  // draw shader on new mesh if it exists
-  if (mesh) {
-    prevMaterial = mesh.material;
-    mesh.material = hideFrontFaceMat;
-    selectedMesh = mesh;
-  } else {
-    selectedMesh = mesh;
-    prevMaterial = mesh;
-  }
-};
-
-let selectedOutlineShader = 1;
+let selectedShader = 1;
 
 const handleHover = () => {
   // get the mesh which was hovered
   const mesh = getMesh();
 
-  console.log(selectedOutlineShader);
+  // remove shader of previous mesh
+  if (selectedMesh) selectedMesh.material = prevMaterial;
 
-  // call whichever outline drawing function is active
-  if (selectedOutlineShader == 1) hideFrontFaceFunc(mesh);
+  if (mesh) {
+    prevMaterial = mesh.material;
+    if (selectedShader === "1") mesh.material = hideFrontFaceMat;
+    if (selectedShader === "2") mesh.material = quantisedLightMat;
+    if (selectedShader === "3") mesh.material = fresnelMat;
+    if (selectedShader === "4") mesh.material = fresnelWithEdgesMat;
+  } else {
+    prevMaterial = null;
+  }
+  selectedMesh = mesh;
 };
 
 const handleSelectChange = (e) => {
   const val = e.target.value;
 
-  selectedOutlineShader = val;
+  selectedShader = val;
 };
 
 const getMesh = () => {
@@ -65,13 +58,32 @@ const createScene = async () => {
   // scene.createDefaultCamera(true, false, true);
 
   // load all materials from Node Material Editor
-  // https://nme.babylonjs.com/#8AKJ1U#1
+  // https://nme.babylonjs.com/#8AKJ1U#2
   hideFrontFaceMat = await Babylon.NodeMaterial.ParseFromSnippetAsync(
     "8AKJ1U#2"
   );
   hideFrontFaceMat.depthFunction = Babylon.Constants.ALWAYS;
   hideFrontFaceMat.disableDepthWrite = true;
   hideFrontFaceMat.alphaMode = Babylon.Constants.ALPHA_ADD;
+
+  quantisedLightMat = await Babylon.NodeMaterial.ParseFromSnippetAsync(
+    "R57SN6"
+  );
+  quantisedLightMat.depthFunction = Babylon.Constants.ALWAYS;
+  quantisedLightMat.disableDepthWrite = true;
+  quantisedLightMat.alphaMode = Babylon.Constants.ALPHA_ADD;
+
+  fresnelMat = await Babylon.NodeMaterial.ParseFromSnippetAsync("EKLXRR#1");
+  fresnelMat.depthFunction = Babylon.Constants.ALWAYS;
+  fresnelMat.disableDepthWrite = true;
+  fresnelMat.alphaMode = Babylon.Constants.ALPHA_ADD;
+
+  fresnelWithEdgesMat = await Babylon.NodeMaterial.ParseFromSnippetAsync(
+    "TCVT9W#4"
+  );
+  fresnelWithEdgesMat.depthFunction = Babylon.Constants.ALWAYS;
+  fresnelWithEdgesMat.disableDepthWrite = true;
+  fresnelWithEdgesMat.alphaMode = Babylon.Constants.ALPHA_ADD;
 
   renderMeshes(scene);
 
