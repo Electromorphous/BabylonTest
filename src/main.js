@@ -8,8 +8,8 @@ let prevMaterial = null;
 // declare all materials
 let hideFrontFaceMat;
 let quantisedLightMat;
-let fresnelMat;
-let fresnelWithEdgesMat;
+let fresnel1;
+let fresnel2;
 
 let selectedShader = "1";
 
@@ -24,8 +24,8 @@ const handleHover = () => {
     prevMaterial = mesh.material;
     if (selectedShader === "1") mesh.material = hideFrontFaceMat;
     if (selectedShader === "2") mesh.material = quantisedLightMat;
-    if (selectedShader === "3") mesh.material = fresnelMat;
-    if (selectedShader === "4") mesh.material = fresnelWithEdgesMat;
+    if (selectedShader === "3") mesh.material = fresnel1;
+    if (selectedShader === "4") mesh.material = fresnel2;
   } else {
     prevMaterial = null;
   }
@@ -67,28 +67,26 @@ const createScene = async () => {
   hideFrontFaceMat.alphaMode = Babylon.Constants.ALPHA_ADD;
 
   quantisedLightMat = await Babylon.NodeMaterial.ParseFromSnippetAsync(
-    "R57SN6"
+    "R57SN6#1"
   );
   quantisedLightMat.depthFunction = Babylon.Constants.ALWAYS;
   quantisedLightMat.disableDepthWrite = true;
   quantisedLightMat.alphaMode = Babylon.Constants.ALPHA_ADD;
 
-  fresnelMat = await Babylon.NodeMaterial.ParseFromSnippetAsync("EKLXRR#1");
-  fresnelMat.depthFunction = Babylon.Constants.ALWAYS;
-  fresnelMat.disableDepthWrite = true;
-  fresnelMat.alphaMode = Babylon.Constants.ALPHA_ADD;
+  fresnel1 = await Babylon.NodeMaterial.ParseFromSnippetAsync("EKLXRR#1");
+  fresnel1.depthFunction = Babylon.Constants.ALWAYS;
+  fresnel1.disableDepthWrite = true;
+  fresnel1.alphaMode = Babylon.Constants.ALPHA_ADD;
 
-  fresnelWithEdgesMat = await Babylon.NodeMaterial.ParseFromSnippetAsync(
-    "TCVT9W#4"
-  );
-  fresnelWithEdgesMat.depthFunction = Babylon.Constants.ALWAYS;
-  fresnelWithEdgesMat.disableDepthWrite = true;
-  fresnelWithEdgesMat.alphaMode = Babylon.Constants.ALPHA_ADD;
+  fresnel2 = await Babylon.NodeMaterial.ParseFromSnippetAsync("TCVT9W#4");
+  fresnel2.depthFunction = Babylon.Constants.ALWAYS;
+  fresnel2.disableDepthWrite = true;
+  fresnel2.alphaMode = Babylon.Constants.ALPHA_ADD;
 
   renderMeshes(scene);
 
   // initialise ray casting function for event listener
-  scene.onPointerDown = handleHover;
+  scene.onPointerMove = handleHover;
 
   return scene;
 };
